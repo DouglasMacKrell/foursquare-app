@@ -52,7 +52,7 @@ function App() {
     const getVenues = async () => {
       if (latLong !== "") {
         try {
-          const endPoint = `http://localhost:3001/api/venues/${latLong}`;
+          const endPoint = `https://beholdburitto.herokuapp.com/api/venues/${latLong}`;
           console.log(endPoint);
           await axios.get(endPoint).then((response) => {
             console.log(response.data.response.groups[0].items);
