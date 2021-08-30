@@ -17,5 +17,19 @@
   "bugs": {
     "url": "https://github.com/DouglasMacKrell/foursquare-app/issues"
   },
+    "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not chrome < 51",
+      "not safari < 10"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "homepage": "https://github.com/DouglasMacKrell/foursquare-app#readme"
 }
