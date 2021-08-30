@@ -21,16 +21,8 @@ router.get("/:latLong", async (req, res, next) => {
       v: "20180323",
     };
     const fetch_response = await fetch(api_url + new URLSearchParams(params))
-    console.log(fetch_response)
     const json = await fetch_response.json();
     res.json(json);
-})
-
-router.get("/map", (req, res, next) => {
-  const json = {
-    key: process.env.REACT_APP_MAPBOX,
-  };
-  res.json(json)
 })
 
 module.exports = router

@@ -27,7 +27,6 @@ function App() {
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((response) => {
-          console.log(response.coords);
           setLat(response.coords.latitude);
           setLng(response.coords.longitude);
           setLatLong(
@@ -53,17 +52,13 @@ function App() {
       if (latLong !== "") {
         try {
           const endPoint = `https://beholdburitto.herokuapp.com/api/venues/${latLong}`;
-          console.log(endPoint);
           await axios.get(endPoint).then((response) => {
-            console.log(response.data.response.groups[0].items);
             setLocationData({ venue: response.data.response.groups[0].items });
           });
         } catch (error) {
           throw error;
         }
-      } else {
-        console.log("Oops! All errors!");
-      }
+      } 
     };
     getVenues();
   }, [latLong]);
