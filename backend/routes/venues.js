@@ -26,4 +26,11 @@ router.get("/:latLong", async (req, res, next) => {
     res.json(json);
 })
 
+router.get("/map", (req, res, next) => {
+  const json = {
+    key: process.env.REACT_APP_MAPBOX,
+  };
+  res.json(json)
+})
+
 module.exports = router
