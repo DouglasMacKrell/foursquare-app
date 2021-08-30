@@ -76,7 +76,7 @@ function App() {
     <div className="App">
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+        mapboxApiAccessToken="pk.eyJ1IjoiYmlnbWFja3JlbGwiLCJhIjoiY2tzeTVxdm83MWJrNzJycGx4ZHE1YzhxMiJ9.b5E1tiWaOP1SFrxze9vGrA"
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/bigmackrell/cksxr7r8n8cim17nkzr5coegq"
       >
