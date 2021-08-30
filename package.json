@@ -1,0 +1,20 @@
+{
+  "name": "foursquare-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-prebuild": "cd backend && npm install && cd .. && cd frontend && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DouglasMacKrell/foursquare-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DouglasMacKrell/foursquare-app/issues"
+  },
+  "homepage": "https://github.com/DouglasMacKrell/foursquare-app#readme"
+}
