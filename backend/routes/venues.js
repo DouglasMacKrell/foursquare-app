@@ -17,6 +17,7 @@ router.get("/:latLong", async (req, res, next) => {
       ll: req.params.latLong,
       query: "mexican",
       sortByDistance: 1,
+      limit: 10,
       v: "20180323",
     };
     const fetch_response = await fetch(api_url + new URLSearchParams(params))
