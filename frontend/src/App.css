@@ -25,7 +25,6 @@ label {
 .list-container {
   display: flex;
   justify-content: center;
-  flex-direction: column;
 }
 
 .list-subcontainer {
@@ -34,6 +33,10 @@ label {
   margin-top: 30px;
   border-radius: 20px;
   border: 5px solid tomato;
+}
+
+.credit {
+  text-align: center;
 }
 
 .logo {

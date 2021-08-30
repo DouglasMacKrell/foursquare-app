@@ -175,10 +175,10 @@ function App() {
             <p>{locationData}</p>
           )}
         </div>
-        <a href="https://douglasmackrell.com">
-          <h3>Designed and built by Douglas MacKrell!</h3>
-        </a>
       </div>
+      <a href="https://douglasmackrell.com" className="credit">
+        <h3>Designed and built by Douglas MacKrell</h3>
+      </a>
     </div>
   );
 }
