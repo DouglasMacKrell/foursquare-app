@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { ReactComponent as BeholdBurritoLogo } from './Behold-Burrito.svg'
@@ -80,7 +80,6 @@ function App() {
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/bigmackrell/cksxr7r8n8cim17nkzr5coegq"
       >
-        <NavigationControl style={navControlStyle} />
         {locationData.venue ? (
           <>
             <Marker
