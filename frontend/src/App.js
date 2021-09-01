@@ -77,6 +77,8 @@ function App() {
             const myBounds = getBounds(lng, lat, furthestPointLng, furthestPointLat);
             console.log(myBounds)
             setViewport({
+              width: "100vw",
+              height: "50vh",
               ...myBounds,
             });
           });
