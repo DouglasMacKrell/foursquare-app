@@ -7,7 +7,7 @@ import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
 
-import geolib from 'geolib';
+import { getBoundsOfDistance } from 'geolib';
 
 function App() {
   const [latLong, setLatLong] = useState("");
@@ -60,7 +60,7 @@ function App() {
               response.data.response.groups[0].items[9].venue.location.lat;
             const furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
-
+            console.log(furthestPointLat)
             // var y =
             //   Math.sin(lng - furthestPointLng) *
             //   Math.cos(lng);
@@ -73,18 +73,18 @@ function App() {
 
             const distanceToFurthest = response.data.response.groups[0].items[9].venue.location.distance
 
-            const bounds = geolib.getBoundsOfDistance(
+            const myBounds = getBoundsOfDistance(
               { latitude: lat, longitude: lng },
               distanceToFurthest
             );
-            console.log(bounds)
+            console.log(myBounds)
             
             const { longitude, latitude, zoom } = new WebMercatorViewport(
               { width: window.innerWidth, height: window.innerHeight}
             ).fitBounds(
               [
-                [bounds[0], bounds[1]],
-                [bounds[2], bounds[3]],
+                [myBounds[0], myBounds[1]],
+                [myBounds[2], myBounds[3]],
               ],
               {
                 padding: 20,
