@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import axios from "axios";
 
@@ -23,10 +23,13 @@ function App() {
   });
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
 
+  const mapRef = useRef();
+
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
+    const { offsetHeight: height, offsetWidth: width } = mapRef.getContainer();
     const bounds = new WebMercatorViewport({
-      width: viewport.width,
-      height: viewport.height,
+      width: width,
+      height: height,
     }).fitBounds(
       [
         [closeLng, closeLat],
@@ -75,6 +78,7 @@ function App() {
             let furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
             const myBounds = getBounds(lng, lat, furthestPointLng, furthestPointLat);
+            console.log(myBounds)
             setViewport({
               ...myBounds,
             });
@@ -98,6 +102,7 @@ function App() {
         mapboxApiAccessToken="pk.eyJ1IjoiYmlnbWFja3JlbGwiLCJhIjoiY2tzeTVxdm83MWJrNzJycGx4ZHE1YzhxMiJ9.b5E1tiWaOP1SFrxze9vGrA"
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/bigmackrell/cksxr7r8n8cim17nkzr5coegq"
+        ref={mapRef}
       >
         {locationData.venue ? (
           <>
