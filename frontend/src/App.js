@@ -55,19 +55,23 @@ function App() {
           console.log("getVenues")
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
-            let furthestPointLat = response.data.response.groups[0].items[9].venue.location.lat
-            let furthestPointLng = response.data.response.groups[0].items[9].venue.location.lng
-            console.log([
-              [lng, lat],
-              [furthestPointLng, furthestPointLat],
-            ]);
-            const bounds = new WebMercatorViewport({ width: 800, height: 600 })
-              .fitBounds([[lng, lat], [furthestPointLng, furthestPointLat]], { padding: 200, offset: [0, -100] });
-            const { longitude, latitude, zoom } = bounds
+            const getBounds = () => {
+              let furthestPointLat = response.data.response.groups[0].items[9].venue.location.lat
+              let furthestPointLng = response.data.response.groups[0].items[9].venue.location.lng
+              console.log([
+                [lng, lat],
+                [furthestPointLng, furthestPointLat],
+              ]);
+              const bounds = new WebMercatorViewport({ width: 800, height: 600 })
+                .fitBounds([[lng, lat], [furthestPointLng, furthestPointLat]], { padding: 200, offset: [0, -100] });
+              const { longitude, latitude, zoom } = bounds
+              return { longitude, latitude, zoom }
+            }
+            const myBounds = getBounds()
             setViewport({
               width: "100vw",
               height: "50vh",
-              ...bounds
+              ...myBounds
             })
           });
         } catch (error) {
