@@ -11,10 +11,13 @@ var app = express();
 var cors = require("cors");
 app.use(cors());
 
-// const port = Number(process.env.PORT) || 4004;
-
-// const http = require("http");
-// const server = http.createServer(app);
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,7 +31,5 @@ app.use('/api/venues', venuesRouter)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
-
-// server.listen(port, () => console.log(`Server is running on port ${port}`));
 
 module.exports = app;
