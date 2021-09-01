@@ -58,11 +58,17 @@ function App() {
               response.data.response.groups[0].items[9].venue.location.lat;
             const furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
+            const oppositeLat = lat - furthestPointLat;
+            const oppositeLng = lng - furthestPointLng;
+            console.log("furthestPointLat = " + furthestPointLat);
+            console.log("furthestPointLng = " + furthestPointLng);
+            console.log("oppositeLat = " + oppositeLat);
+            console.log("oppositeLng = " + oppositeLng);
             const { longitude, latitude, zoom } = new WebMercatorViewport(
               { width: window.innerWidth, height: window.innerHeight}
             ).fitBounds(
               [
-                [lng, lat],
+                [oppositeLng, oppositeLat],
                 [furthestPointLng, furthestPointLat],
               ],
               {
