@@ -5,7 +5,7 @@ import axios from "axios";
 import ReactMapGL, { Marker, Popup, WebMercatorViewport } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
-import { ReactComponent as BeholdBurritoLogo } from './Behold-Burrito.svg'
+import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
 
 function App() {
   const [latLong, setLatLong] = useState("");
@@ -23,6 +23,21 @@ function App() {
   });
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
 
+  const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
+    const bounds = new WebMercatorViewport({
+      width: 800,
+      height: 600,
+    }).fitBounds(
+      [
+        [closeLng, closeLat],
+        [furthestLng, furthestLat],
+      ],
+      { padding: 200, offset: [0, -100] }
+    );
+    const { longitude, latitude, zoom } = bounds;
+    return { longitude, latitude, zoom };
+  };
+
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -36,10 +51,10 @@ function App() {
             width: "100vw",
             height: "50vh",
             latitude: response.coords.latitude,
-            longitude: response.coords.longitude
+            longitude: response.coords.longitude,
           });
         });
-        console.log("getLocation")
+        console.log("getLocation");
       } else {
         setLocationData("Geolocation is not supported by this browser");
       }
@@ -52,32 +67,24 @@ function App() {
       if (latLong !== "") {
         try {
           const endPoint = `https://beholdburrito.herokuapp.com/api/venues/${latLong}`;
-          console.log("getVenues")
+          console.log("getVenues");
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
-            const getBounds = () => {
-              let furthestPointLat = response.data.response.groups[0].items[9].venue.location.lat
-              let furthestPointLng = response.data.response.groups[0].items[9].venue.location.lng
-              console.log([
-                [lng, lat],
-                [furthestPointLng, furthestPointLat],
-              ]);
-              const bounds = new WebMercatorViewport({ width: 800, height: 600 })
-                .fitBounds([[lng, lat], [furthestPointLng, furthestPointLat]], { padding: 200, offset: [0, -100] });
-              const { longitude, latitude, zoom } = bounds
-              return { longitude, latitude, zoom }
-            }
-            const myBounds = getBounds()
+            let furthestPointLat =
+              response.data.response.groups[0].items[9].venue.location.lat;
+            let furthestPointLng =
+              response.data.response.groups[0].items[9].venue.location.lng;
+            const myBounds = getBounds(lng, lat, furthestPointLng, furthestPointLat);
             setViewport({
               width: "100vw",
               height: "50vh",
-              ...myBounds
-            })
+              ...myBounds,
+            });
           });
         } catch (error) {
           throw error;
         }
-      } 
+      }
     };
     getVenues();
   }, [latLong]);
