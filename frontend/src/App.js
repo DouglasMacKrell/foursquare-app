@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import ReactMapGL, { Marker, Popup, WebMercatorViewport } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { ReactComponent as BeholdBurritoLogo } from './Behold-Burrito.svg'
-
-const navControlStyle= {
-  right: 10,
-  top: 10
-};
 
 function App() {
   const [latLong, setLatLong] = useState("");
@@ -37,13 +32,13 @@ function App() {
           setLatLong(
             response.coords.latitude + "," + response.coords.longitude
           );
-          setViewport({
-            width: "100vw",
-            height: "50vh",
-            latitude: response.coords.latitude,
-            longitude: response.coords.longitude,
-            zoom: 13,
-          });
+          // setViewport({
+          //   width: "100vw",
+          //   height: "50vh",
+          //   latitude: response.coords.latitude,
+          //   longitude: response.coords.longitude,
+          //   zoom: 13,
+          // });
         });
       } else {
         setLocationData("Geolocation is not supported by this browser");
@@ -60,6 +55,15 @@ function App() {
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
           });
+          let furthestPointLat = response.data.response.groups[0].items[9].venue.location.lat
+          let furthestPointLng = response.data.response.groups[0].items[9].venue.location.lng
+          const bounds = new WebMercatorViewport({ width: 800, height: 600 })
+            .fitBounds([lng, lat], [furthestPointLng, furthestPointLat], { padding: 200 });
+          setViewport({
+            width: "100vw",
+            height: "50vh",
+            ...bounds
+          })
         } catch (error) {
           throw error;
         }
@@ -83,6 +87,7 @@ function App() {
         {locationData.venue ? (
           <>
             <Marker
+              key="youarehere"
               latitude={lat}
               longitude={lng}
               offsetLeft={-20}
@@ -99,6 +104,7 @@ function App() {
               return (
                 <>
                   <Marker
+                    key={venue.referralId}
                     latitude={venue.venue.location.lat}
                     longitude={venue.venue.location.lng}
                     offsetLeft={-20}
@@ -158,7 +164,7 @@ function App() {
               {locationData.venue.map((venue) => {
                 return (
                   <a
-                    key={venue.referralId}
+                    key={venue.venue.id}
                     href={`http://www.google.com/search?q=${venue.venue.name.replace(
                       /\s+/g,
                       "+"
