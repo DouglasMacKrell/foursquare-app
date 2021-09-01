@@ -25,8 +25,8 @@ function App() {
 
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
     const bounds = new WebMercatorViewport({
-      width: viewport.width,
-      height: viewport.height,
+      width: 100,
+      height: 100,
     }).fitBounds(
       [
         [closeLng, closeLat],
