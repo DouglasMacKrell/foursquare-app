@@ -83,8 +83,8 @@ function App() {
               { width: window.innerWidth, height: window.innerHeight}
             ).fitBounds(
               [
-                [myBounds[0], myBounds[1]],
-                [myBounds[2], myBounds[3]],
+                [myBounds[0].longitude, myBounds[0].latitude],
+                [myBounds[1].longitude, myBounds[1].latitude],
               ],
               {
                 padding: 20,
