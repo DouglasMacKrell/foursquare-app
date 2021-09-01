@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import ReactMapGL, { Marker, Popup, WebMercatorViewport } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
