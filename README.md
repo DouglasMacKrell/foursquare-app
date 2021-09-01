@@ -26,6 +26,7 @@ This is accomplished by:
   * The blue pins are the discovered locations 
   * The blue pins can be clicked to reveal a data popup displaying the name of the restaurant and its specific address
     * These popups can be dismissed by an X button in the upper right, or can be swapped by clicking a new blue pin
+  * Based on the furthest location from the user (in meters), the app automatically calculates and adjusts the zoom so all pins can be displayed
 * Below the map is a list of all the discovered Mexican restaurants in ascending order
   * Each list item is also a link to a google search run on the restaurant's name - with the goal of giving the user the website for the restaurant, or more information via the google search database
 
@@ -40,6 +41,7 @@ This is accomplished by:
 * Handling faults with react-map-gl npm package
 * Obscuring/blocking secret API keys/tokens from malicious users
 * Displaying multiple pins on a generated map after a call to a separate external API
+* Utilizing WebMercatorViewport within react-map-gl to calculate a bounding box based on the user's geolocation and the latitude and longitude of the furthest pin to automatically zoom the map so all pins are displayed to the user no matter the distance
 
 ## Technologies Used
 
