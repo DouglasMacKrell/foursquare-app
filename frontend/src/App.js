@@ -36,10 +36,10 @@ function App() {
             width: "100vw",
             height: "50vh",
             latitude: response.coords.latitude,
-            longitude: response.coords.longitude,
-            zoom: 13,
+            longitude: response.coords.longitude
           });
         });
+        console.log("getLocation")
       } else {
         setLocationData("Geolocation is not supported by this browser");
       }
@@ -64,6 +64,7 @@ function App() {
               ...bounds
             })
           });
+          console.log("getVenues")
         } catch (error) {
           throw error;
         }
