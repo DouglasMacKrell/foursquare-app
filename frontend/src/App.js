@@ -32,13 +32,13 @@ function App() {
           setLatLong(
             response.coords.latitude + "," + response.coords.longitude
           );
-          // setViewport({
-          //   width: "100vw",
-          //   height: "50vh",
-          //   latitude: response.coords.latitude,
-          //   longitude: response.coords.longitude,
-          //   zoom: 13,
-          // });
+          setViewport({
+            width: "100vw",
+            height: "50vh",
+            latitude: response.coords.latitude,
+            longitude: response.coords.longitude,
+            zoom: 13,
+          });
         });
       } else {
         setLocationData("Geolocation is not supported by this browser");
