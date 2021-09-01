@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-import ReactMapGL, { Marker, Popup, WebMercatorViewport } from "react-map-gl";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
-import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
+import { ReactComponent as BeholdBurritoLogo } from './Behold-Burrito.svg'
 
 function App() {
   const [latLong, setLatLong] = useState("");
@@ -13,12 +13,6 @@ function App() {
 
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
-
-  const [bounds, setBounds] = useState({
-    latitude: 43.25,
-    longitude: -70.9,
-    zoom: 13,
-  });
 
   const [viewport, setViewport] = useState({
     width: "100vw",
@@ -28,23 +22,6 @@ function App() {
     zoom: 13,
   });
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
-
-  const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
-    const myBounds = new WebMercatorViewport({
-      width: 100,
-      height: 100,
-    }).fitBounds(
-      [
-        [closeLng, closeLat],
-        [furthestLng, furthestLat],
-      ],
-      { padding: 20, offset: [0, -100] }
-    );
-    const { longitude, latitude, zoom } = myBounds;
-    setBounds({
-      ...myBounds
-    })
-  };
 
   useEffect(() => {
     const getLocation = () => {
@@ -60,9 +37,9 @@ function App() {
             height: "50vh",
             latitude: response.coords.latitude,
             longitude: response.coords.longitude,
+            zoom: 13,
           });
         });
-        console.log("getLocation");
       } else {
         setLocationData("Geolocation is not supported by this browser");
       }
@@ -75,25 +52,13 @@ function App() {
       if (latLong !== "") {
         try {
           const endPoint = `https://beholdburrito.herokuapp.com/api/venues/${latLong}`;
-          console.log("getVenues");
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
-            let furthestPointLat =
-              response.data.response.groups[0].items[9].venue.location.lat;
-            let furthestPointLng =
-              response.data.response.groups[0].items[9].venue.location.lng;
-            const mViewport = getBounds(lng, lat, furthestPointLng, furthestPointLat);
-            console.log(mViewport)
-            setViewport({
-              width: "100vw",
-              height: "50vh",
-              ...bounds
-            });
           });
         } catch (error) {
           throw error;
         }
-      }
+      } 
     };
     getVenues();
   }, [latLong]);
