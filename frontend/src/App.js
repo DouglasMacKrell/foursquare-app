@@ -14,6 +14,12 @@ function App() {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
 
+  const [bounds, setBounds] = useState({
+    latitude: 43.25,
+    longitude: -70.9,
+    zoom: 13,
+  });
+
   const [viewport, setViewport] = useState({
     width: "100vw",
     height: "50vh",
@@ -24,7 +30,7 @@ function App() {
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
 
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
-    const bounds = new WebMercatorViewport({
+    const myBounds = new WebMercatorViewport({
       width: 100,
       height: 100,
     }).fitBounds(
@@ -34,8 +40,10 @@ function App() {
       ],
       { padding: 20, offset: [0, -100] }
     );
-    const { longitude, latitude, zoom } = bounds;
-    return { longitude, latitude, zoom };
+    const { longitude, latitude, zoom } = myBounds;
+    setBounds({
+      ...myBounds
+    })
   };
 
   useEffect(() => {
@@ -74,12 +82,12 @@ function App() {
               response.data.response.groups[0].items[9].venue.location.lat;
             let furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
-            const myBounds = getBounds(lng, lat, furthestPointLng, furthestPointLat);
-            console.log(myBounds)
+            const mViewport = getBounds(lng, lat, furthestPointLng, furthestPointLat);
+            console.log(mViewport)
             setViewport({
               width: "100vw",
               height: "50vh",
-              ...myBounds,
+              ...bounds
             });
           });
         } catch (error) {
