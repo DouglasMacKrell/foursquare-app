@@ -42,6 +42,7 @@ This is accomplished by:
 * Obscuring/blocking secret API keys/tokens from malicious users
 * Displaying multiple pins on a generated map after a call to a separate external API
 * Utilizing WebMercatorViewport within react-map-gl to calculate a bounding box based on the user's geolocation and the latitude and longitude of the furthest pin to automatically zoom the map so all pins are displayed to the user no matter the distance
+* Forcing HTTPS within Heroku to ensure geolocation is not bloked
 
 ## Technologies Used
 
@@ -51,6 +52,7 @@ This is accomplished by:
 * **react-map-gl** For generating the map within a React project
 * **Mapbox API** The API being called by react-map-gl
 * **CSS3**
+* **Heroku** For deployment
 
 ## Local Setup
 
