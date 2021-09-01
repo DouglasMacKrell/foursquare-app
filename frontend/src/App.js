@@ -36,7 +36,8 @@ function App() {
             width: "100vw",
             height: "50vh",
             latitude: response.coords.latitude,
-            longitude: response.coords.longitude
+            longitude: response.coords.longitude,
+            zoom: 13
           });
         });
         console.log("getLocation")
@@ -52,19 +53,20 @@ function App() {
       if (latLong !== "") {
         try {
           const endPoint = `https://beholdburrito.herokuapp.com/api/venues/${latLong}`;
+          console.log("getVenues")
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
             let furthestPointLat = response.data.response.groups[0].items[9].venue.location.lat
             let furthestPointLng = response.data.response.groups[0].items[9].venue.location.lng
             const bounds = new WebMercatorViewport({ width: 800, height: 600 })
               .fitBounds([lng, lat], [furthestPointLng, furthestPointLat], { padding: 200, offset: [0, -100] });
+            const { longitude, latitude, zoom } = bounds
             setViewport({
               width: "100vw",
               height: "50vh",
               ...bounds
             })
           });
-          console.log("getVenues")
         } catch (error) {
           throw error;
         }
