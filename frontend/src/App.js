@@ -23,13 +23,10 @@ function App() {
   });
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
 
-  const mapRef = useRef();
-
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
-    const { offsetHeight: height, offsetWidth: width } = mapRef.getContainer();
     const bounds = new WebMercatorViewport({
-      width: width,
-      height: height,
+      width: viewport.width,
+      height: viewport.height,
     }).fitBounds(
       [
         [closeLng, closeLat],
@@ -102,7 +99,6 @@ function App() {
         mapboxApiAccessToken="pk.eyJ1IjoiYmlnbWFja3JlbGwiLCJhIjoiY2tzeTVxdm83MWJrNzJycGx4ZHE1YzhxMiJ9.b5E1tiWaOP1SFrxze9vGrA"
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/bigmackrell/cksxr7r8n8cim17nkzr5coegq"
-        ref={mapRef}
       >
         {locationData.venue ? (
           <>
