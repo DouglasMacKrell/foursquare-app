@@ -7,6 +7,8 @@ import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
 
+import geolib from 'geolib';
+
 function App() {
   const [latLong, setLatLong] = useState("");
   const [locationData, setLocationData] = useState("Loading...");
@@ -58,18 +60,31 @@ function App() {
               response.data.response.groups[0].items[9].venue.location.lat;
             const furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
-            const oppositeLat = lat - furthestPointLat;
-            const oppositeLng = lng - furthestPointLng;
-            console.log("furthestPointLat = " + furthestPointLat);
-            console.log("furthestPointLng = " + furthestPointLng);
-            console.log("oppositeLat = " + oppositeLat);
-            console.log("oppositeLng = " + oppositeLng);
+
+            // var y =
+            //   Math.sin(lng - furthestPointLng) *
+            //   Math.cos(lng);
+            // var x =
+            //   Math.cos(furthestPointLat) * Math.sin(lat) -
+            //   Math.sin(furthestPointLat) *
+            //     Math.cos(lat) *
+            //     Math.cos(lng - furthestPointLng);
+            // var brng = (Math.atan2(y, x) * 180) / Math.PI;
+
+            const distanceToFurthest = response.data.response.groups[0].items[9].venue.location.distance
+
+            const bounds = geolib.getBoundsOfDistance(
+              { latitude: lat, longitude: lng },
+              distanceToFurthest
+            );
+            console.log(bounds)
+            
             const { longitude, latitude, zoom } = new WebMercatorViewport(
               { width: window.innerWidth, height: window.innerHeight}
             ).fitBounds(
               [
-                [oppositeLng, oppositeLat],
-                [furthestPointLng, furthestPointLat],
+                [bounds[0], bounds[1]],
+                [bounds[2], bounds[3]],
               ],
               {
                 padding: 20,
