@@ -59,7 +59,7 @@ function App() {
             const furthestPointLng =
               response.data.response.groups[0].items[9].venue.location.lng;
             const { longitude, latitude, zoom } = new WebMercatorViewport(
-              viewport
+              { width: window.innerWidth, height: window.innerHeight}
             ).fitBounds(
               [
                 [lng, lat],
@@ -71,7 +71,8 @@ function App() {
               }
             );
             setViewport({
-              ...viewport,
+              width: "100vw",
+              height: "50vh",
               longitude,
               latitude,
               zoom
