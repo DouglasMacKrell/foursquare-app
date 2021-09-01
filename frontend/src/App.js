@@ -24,20 +24,15 @@ function App() {
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
 
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
-    let padding = 20
-    const { offsetHeight: height, offsetWidth: width } = map.getContainer()
-
-    if (padding * 2 > height || padding * 2 > width) padding = 0;
-
     const bounds = new WebMercatorViewport({
-      width,
-      height,
+      width: viewport.width,
+      height: viewport.height,
     }).fitBounds(
       [
         [closeLng, closeLat],
         [furthestLng, furthestLat],
       ],
-      { padding }
+      { padding: 20, offset: [0, -100] }
     );
     const { longitude, latitude, zoom } = bounds;
     return { longitude, latitude, zoom };
