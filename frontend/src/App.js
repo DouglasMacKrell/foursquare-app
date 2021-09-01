@@ -25,14 +25,14 @@ function App() {
 
   const getBounds = (closeLng, closeLat, furthestLng, furthestLat) => {
     const bounds = new WebMercatorViewport({
-      width: 800,
-      height: 600,
+      width: "100vw",
+      height: "50vh",
     }).fitBounds(
       [
         [closeLng, closeLat],
         [furthestLng, furthestLat],
       ],
-      { padding: 200, offset: [0, -100] }
+      { padding: 20 }
     );
     const { longitude, latitude, zoom } = bounds;
     return { longitude, latitude, zoom };
