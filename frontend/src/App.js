@@ -5,7 +5,7 @@ import axios from "axios";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import RoomIcon from "@material-ui/icons/Room";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
-import { ReactComponent as BeholdBurritoLogo } from './Behold-Burrito.svg'
+import { ReactComponent as BeholdBurritoLogo } from "./Behold-Burrito.svg";
 
 function App() {
   const [latLong, setLatLong] = useState("");
@@ -54,11 +54,33 @@ function App() {
           const endPoint = `https://beholdburrito.herokuapp.com/api/venues/${latLong}`;
           await axios.get(endPoint).then((response) => {
             setLocationData({ venue: response.data.response.groups[0].items });
+            const furthestPointLat =
+              response.data.response.groups[0].items[9].venue.location.lat;
+            const furthestPointLng =
+              response.data.response.groups[0].items[9].venue.location.lng;
+            const { longitude, latitude, zoom } = new WebMercatorViewport(
+              viewport
+            ).fitBounds(
+              [
+                [lng, lat],
+                [furthestPointLng, furthestPointLat],
+              ],
+              {
+                padding: 20,
+                offset: [0, -100],
+              }
+            );
+            setViewport({
+              ...viewport,
+              longitude,
+              latitude,
+              zoom
+            })
           });
         } catch (error) {
           throw error;
         }
-      } 
+      }
     };
     getVenues();
   }, [latLong]);
